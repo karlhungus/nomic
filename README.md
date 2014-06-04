@@ -4,7 +4,7 @@ http://legacy.earlham.edu/~peters/writing/nomic.htm#initial%20set
 
 # Nomic Initial Set of Rules
 
-## Immutable Rules
+## Immutable Rules ("100's")
 
 101. All players must always abide by all the rules then in effect, in the form in which they are then in effect. The rules in the Initial Set are in effect whenever a game begins. The Initial Set consists of Rules 101-116 (immutable) and 201-213 (mutable).
 
@@ -38,7 +38,7 @@ http://legacy.earlham.edu/~peters/writing/nomic.htm#initial%20set
 
 116. Whatever is not prohibited or regulated by a rule is permitted and unregulated, with the sole exception of changing the rules, which is permitted only when a rule or set of rules explicitly or implicitly permits it.
 
-## Mutable Rules
+## Mutable Rules ("200's")
 
 201. Players shall alternate in clockwise order, taking one whole turn apiece. Turns may not be skipped or passed, and parts of turns may not be omitted. All players begin with zero points. In mail and computer games, players shall alternate in alphabetical order by surname.
 
