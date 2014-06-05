@@ -2,7 +2,7 @@ require 'sinatra'
 require 'haml'
 requlre 'nomic'
 
-Class Nomic::App < Sinatra::Base
+class Nomic::App < Sinatra::Base
 
     use Rack::CommonLogger
 
