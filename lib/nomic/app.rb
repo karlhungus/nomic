@@ -72,6 +72,6 @@ class Nomic::App < Sinatra::Base
                                'Accept' => 'application/vnd.heroku+json; version=3' },
                                body: {"slug" => File.join(Nomic::ROOT_PATH, location_of_tgz)})
     puts 'finished post of slug'
-    puts post_response
+    'and now we are done'
   end
 end
