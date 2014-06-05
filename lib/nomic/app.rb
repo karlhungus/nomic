@@ -8,15 +8,12 @@ class Nomic::App < Sinatra::Base
   set :public, File.join(Nomic::ROOT_PATH, "public")
 
   post '/payload' do
-    #push = JSON.parse(params[:payload])
-    #puts "I got some JSON: #{push.inspect}"
-    puts 'Recieved Payload'
-    puts "Request #{params.inspect}"
+    puts 'Recved Payload'
+    puts "Request: #{params}"
     params
   end
 
   get '/' do
-    puts "test test test ------- ***********"
     haml :index
   end
 end
