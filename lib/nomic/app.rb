@@ -30,6 +30,7 @@ class Nomic::App < Sinatra::Base
   get '/deploy_tarball' do
     #curl -n -X POST https://api.heroku.com/apps/shopify-nomic/builds -d '{"source_blob":{"url":"https://github.com/karlhungus/nomic/archive/master.tar.gz", "version": "111"}}' -H 'Accept: application/vnd.heroku+json; version=3' -H "Content-Type: application/json"
     #
+    api_key = 'OjJlY2Q3NWJiLWVmYTQtNGMzMC1iMDM0LTFlMTY0NGNkNTVlNQo='
     response = HTTParty.post('https://api.hero.com/apps/shopify-nomic/builds',
              headers: { "ContentType" => 'application/json',
               'Authorization' => api_key,
