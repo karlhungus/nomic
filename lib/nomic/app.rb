@@ -35,7 +35,7 @@ class Nomic::App < Sinatra::Base
               'Authorization' => api_key,
                'Accept' => 'application/vnd.heroku+json; version=3' },
             body:
-              { "source_blob" => {"url" => "https://github.com/karlhungus/nomic/archive/master.tar.gz", "version" => "1"})
+              { "source_blob" => {"url" => "https://github.com/karlhungus/nomic/archive/master.tar.gz", "version" => "1"}})
     response.to_s
   end
 end
