@@ -1,6 +1,6 @@
 require 'sinatra'
 require 'haml'
-requlre 'nomic'
+require 'nomic'
 
 class Nomic::App < Sinatra::Base
 
