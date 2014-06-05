@@ -34,7 +34,7 @@ class Nomic::App < Sinatra::Base
     #  -d '{"slug":"d969e0b3-9892-3113-7653-1aa1d1108bc3"}' \
     #  -n https://api.heroku.com/apps/example/releases
     #location_of_tgz = 'https://github.com/karlhungus/nomic/archive/7380385c1703a202d84d3d36589eae8b3b8560de.tar.gz'
-    location_of_tgz = nomic-master.tar.gz
+    location_of_tgz = 'nomic-master.tar.gz'
 
     #request slug allocation
 
