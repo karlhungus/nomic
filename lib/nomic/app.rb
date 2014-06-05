@@ -46,7 +46,6 @@ class Nomic::App < Sinatra::Base
                             body:
                               { "process_types" => {"web" => "bundle exec rackup config.ru -p $PORT"}})
     puts "result of first slug alloc: #{@result}"
-#    debugger
     blob_response = @result['blob']
     id = @result['id']
     url = blob_response['url']
