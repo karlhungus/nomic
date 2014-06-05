@@ -55,11 +55,12 @@ class Nomic::App < Sinatra::Base
     puts blob_response
 
     #push slug to server
-    #HTTParty.put('https://api.heroku.com/apps/shopify-nomic/releases',
-    #             headers: {"Content-Type" => "application/json",
-    #               "Accept" => "application/vnd.heroku+json; version=3",
-    #'Authorization' => '2ecd75bb-efa4-4c30-b034-1e1644cd55e5',},
-    #             body: {"slug" => blob_response})
+    tgz = File.new(location_of_tgz, 'rb').read
+    HTTParty.put('https://api.heroku.com/apps/shopify-nomic/releases',
+                 headers: {"Content-Type" => "application/json",
+                   "Accept" => "application/vnd.heroku+json; version=3",
+                   'Authorization' => api_key},
+                 body: tgz)
 
     #release slug
     #curl -X POST \
@@ -72,7 +73,7 @@ class Nomic::App < Sinatra::Base
                              headers: { "ContentType" => 'application/json',
                               'Authorization' => api_key,
                                'Accept' => 'application/vnd.heroku+json; version=3' },
-                               body: {"slug" => File.join(Nomic::ROOT_PATH, location_of_tgz)})
+                               body: {"slug" => blob_response['id']})
     puts 'post response'
     puts post_response
     puts 'finished post of slug'
