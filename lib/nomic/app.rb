@@ -27,6 +27,10 @@ class Nomic::App < Sinatra::Base
     haml :index
   end
 
+  get '/test' do
+    'this is in the tarball'
+  end
+
   get '/deploy_tarball' do
     #curl -X POST \
     #  -H "Accept: application/vnd.heroku+json; version=3" \
@@ -49,8 +53,8 @@ class Nomic::App < Sinatra::Base
     puts 'results of requestion slug allocaiton'
     puts @result
     puts 'fetching blob'
-    debugger
-    blob_response = JSON.parse(@result)['blob']
+#    debugger
+    blob_response = @result['blob']
     puts 'blob response'
     puts blob_response
 
