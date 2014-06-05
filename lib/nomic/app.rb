@@ -28,53 +28,14 @@ class Nomic::App < Sinatra::Base
   end
 
   get '/deploy_tarball' do
-    #curl -X POST \
-    #  -H "Accept: application/vnd.heroku+json; version=3" \
-    #  -H "Content-Type: application/json" \
-    #  -d '{"slug":"d969e0b3-9892-3113-7653-1aa1d1108bc3"}' \
-    #  -n https://api.heroku.com/apps/example/releases
-    #location_of_tgz = 'https://github.com/karlhungus/nomic/archive/7380385c1703a202d84d3d36589eae8b3b8560de.tar.gz'
-    location_of_tgz = 'nomic-master.tar.gz'
-
-    #request slug allocation
-    puts 'Requesting slug allocation'
-    api_key = 'OjJlY2Q3NWJiLWVmYTQtNGMzMC1iMDM0LTFlMTY0NGNkNTVlNQo='
-    @result = HTTParty.post('https://api.heroku.com/apps/shopify-nomic/slugs',
-                            headers: { "ContentType" => 'application/json',
-                              'Authorization' => api_key,
-                               'Accept' => 'application/vnd.heroku+json; version=3' },
-                            body:
-                              #{ "process_types" => {"web" => "bundle exec rackup config.ru"}})
-                              { "process_types" => {"web" => "ruby-2.0.0/bin/ruby server.rb"}})
-    puts "result of first slug alloc: #{@result}"
-    blob_response = @result['blob']
-    id = @result['id']
-    url = blob_response['url']
-    puts "blob response: #{blob_response}"
-    puts "id from blob: #{id}"
-    puts "url from blob: #{url}"
-    #push slug to server
-    #curl -X PUT \
-    #-H "Content-Type:" \
-    #--data-binary @slug.tgz \
-    #"https://s3-external-1.amazonaws.com/herokuslugs/heroku.com/v1/d969e0b3-9892-4567-7642-1aa1d1108bc3?AWSAccessKeyId=AKIAJWLOWWHPBWQOPJZQ&Signature=2oJJEtemTp7h0qTH2Q4B2nIUY9w%3D&Expires=1381273352"
-    tgz = File.new(location_of_tgz, 'rb').read
-    put_response = HTTParty.put(url,
-                 headers: {"Content-Type" => ""},
-                 body: tgz)
-    puts "results of put request: #{put_response}"
-    #release slug
-    #curl -X POST \
-    #-H "Accept: application/vnd.heroku+json; version=3" \
-    #-H "Content-Type: application/json" \
-    #-d '{"slug":"d969e0b3-9892-3113-7653-1aa1d1108bc3"}' \
-    #-n https://api.heroku.com/apps/example/releases
-    post_response = HTTParty.post('https://api.heroku.com/apps/shopify-nomic/releases',
-                             headers: { "ContentType" => 'application/json',
-                              'Authorization' => api_key,
-                               'Accept' => 'application/vnd.heroku+json; version=3' },
-                               body: {"slug" => id})
-    puts "post response: #{post_response}"
-    'and now we are done'
+    #curl -n -X POST https://api.heroku.com/apps/shopify-nomic/builds -d '{"source_blob":{"url":"https://github.com/karlhungus/nomic/archive/master.tar.gz", "version": "111"}}' -H 'Accept: application/vnd.heroku+json; version=3' -H "Content-Type: application/json"
+    #
+    response = HTTParty.post('https://api.hero.com/apps/shopify-nomic/builds',
+             headers: { "ContentType" => 'application/json',
+              'Authorization' => api_key,
+               'Accept' => 'application/vnd.heroku+json; version=3' },
+            body:
+              { "source_blob" => {"url" => "https://github.com/karlhungus/nomic/archive/master.tar.gz", "version" => "1"})
+    response.to_s
   end
 end
