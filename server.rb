@@ -1,8 +1,7 @@
 require 'sinatra'
 require 'json'
 
-class App < Sinatra::Base
-
+class Nomic < Sinatra::Base
   post '/payload' do
     push = JSON.parse(params[:payload])
     puts "I got some JSON: #{push.inspect}"
