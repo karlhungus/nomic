@@ -5,7 +5,7 @@ gem 'sinatra'
 gem 'json'
 gem 'slim'
 gem 'haml'
-
+gem 'httparty'
 gem 'byebug'
 gem 'pry'
 gem 'pry-byebug'
