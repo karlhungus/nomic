@@ -1,2 +1,9 @@
+The current directory:
+
+%pre
+  = File.expand_path File.dirname(__FILE__)
+
+Last /payload request:
+
 %pre
   = "#{JSON.pretty_generate @data}"
