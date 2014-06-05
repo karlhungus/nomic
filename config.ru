@@ -1,4 +1,4 @@
 require 'bundler/setup'
-require 'vote/app'
+require 'nomic/app'
 
 run Nomic::App.new
