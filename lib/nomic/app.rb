@@ -27,10 +27,6 @@ class Nomic::App < Sinatra::Base
     haml :index
   end
 
-  get '/test' do
-    'this is in the tarball'
-  end
-
   get '/deploy_tarball' do
     #curl -X POST \
     #  -H "Accept: application/vnd.heroku+json; version=3" \
