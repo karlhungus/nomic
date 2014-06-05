@@ -6,8 +6,7 @@ class Nomic < Sinatra::Base
     push = JSON.parse(params[:payload])
     puts "I got some JSON: #{push.inspect}"
   end
-
   get '/' do
-    erb :index
+      'Hello world!'
   end
 end
