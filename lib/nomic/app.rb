@@ -31,12 +31,15 @@ class Nomic::App < Sinatra::Base
     #curl -n -X POST https://api.heroku.com/apps/shopify-nomic/builds -d '{"source_blob":{"url":"https://github.com/karlhungus/nomic/archive/master.tar.gz", "version": "111"}}' -H 'Accept: application/vnd.heroku+json; version=3' -H "Content-Type: application/json"
     #
     api_key = 'OjJlY2Q3NWJiLWVmYTQtNGMzMC1iMDM0LTFlMTY0NGNkNTVlNQo='
+    api_key = 'MmVjZDc1YmItZWZhNC00YzMwLWIwMzQtMWUxNjQ0Y2Q1NWU1Cg=='
+    debugger
     response = HTTParty.post('https://api.heroku.com/apps/shopify-nomic/builds',
              headers: { "ContentType" => 'application/json',
               'Authorization' => api_key,
                'Accept' => 'application/vnd.heroku+json; version=3' },
             body:
               { "source_blob" => {"url" => "https://github.com/karlhungus/nomic/archive/master.tar.gz", "version" => "1"}})
+    puts "response: #{response}"
     response.to_s
   end
 end
