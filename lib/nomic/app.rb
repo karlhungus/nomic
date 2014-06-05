@@ -3,7 +3,7 @@ require 'haml'
 require 'nomic'
 require 'json'
 require 'byebug'
-include HTTParty
+require 'httparty'
 
 class Nomic::App < Sinatra::Base
   use Rack::CommonLogger
@@ -44,7 +44,7 @@ class Nomic::App < Sinatra::Base
                               'Authorization' => '2ecd75bb-efa4-4c30-b034-1e1644cd55e5',
                                'Accept' => 'application/vnd.heroku+json; version=3' },
                             body:
-                              { "process_types" => {"web": "ruby-2.0.0/bin/ruby server.rb"}})
+                              { "process_types" => {"web" => "ruby-2.0.0/bin/ruby server.rb"}})
     puts 'results of requestion slug allocaiton'
     puts @result
     puts 'fetching blob'
