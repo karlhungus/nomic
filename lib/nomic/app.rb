@@ -48,7 +48,7 @@ class Nomic::App < Sinatra::Base
     puts "result of first slug alloc: #{@result}"
 #    debugger
     blob_response = @result['blob']
-    id = blob_response['id']
+    id = @result['id']
     url = blob_response['url']
     puts "blob response: #{blob_response}"
     puts "id from blob: #{id}"
@@ -73,7 +73,7 @@ class Nomic::App < Sinatra::Base
                              headers: { "ContentType" => 'application/json',
                               'Authorization' => api_key,
                                'Accept' => 'application/vnd.heroku+json; version=3' },
-                               body: {"slug" => blob_response['id']})
+                               body: {"slug" => id})
     puts "post response: #{post_response}"
     'and now we are done'
   end
