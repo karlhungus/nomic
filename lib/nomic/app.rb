@@ -33,8 +33,8 @@ class Nomic::App < Sinatra::Base
     #  -H "Content-Type: application/json" \
     #  -d '{"slug":"d969e0b3-9892-3113-7653-1aa1d1108bc3"}' \
     #  -n https://api.heroku.com/apps/example/releases
-    location_of_tgz = 'https://github.com/karlhungus/nomic/archive/7380385c1703a202d84d3d36589eae8b3b8560de.tar.gz'
-
+    #location_of_tgz = 'https://github.com/karlhungus/nomic/archive/7380385c1703a202d84d3d36589eae8b3b8560de.tar.gz'
+    location_of_tgz = nomic-master.tar.gz
 
     #request slug allocation
 
@@ -73,6 +73,7 @@ class Nomic::App < Sinatra::Base
                               'Authorization' => api_key,
                                'Accept' => 'application/vnd.heroku+json; version=3' },
                                body: {"slug" => File.join(Nomic::ROOT_PATH, location_of_tgz)})
+    puts post_response
     puts 'finished post of slug'
     'and now we are done'
   end
