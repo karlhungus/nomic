@@ -1,5 +1,5 @@
 $:.unshift File.expand_path('.', File.dirname(__FILE__))
 require 'bundler/setup'
-require 'server'
+require 'nomic'
 
-run App.new
+run Nomic.new
