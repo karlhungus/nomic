@@ -9,8 +9,9 @@ class App < Sinatra::Base
   end
 
   get '/' do
-    "it worked"
-  #  erb :index
+  #  "it worked"
+    #erb :index
+    "foo"
   end
 
 end
