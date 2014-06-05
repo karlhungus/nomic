@@ -6,11 +6,9 @@ require 'byebug'
 require 'httparty'
 
 class Nomic::App < Sinatra::Base
-  include HTTParty
-  debug_output $stdout
   use Rack::CommonLogger
   set :views, File.join(Nomic::ROOT_PATH, "views")
-  set :public, File.join(Nomic::ROOT_PATH, "public")
+  #set :public, File.join(Nomic::ROOT_PATH, "public")
 
   @@data = {request: "no request"}
   post '/payload' do
@@ -41,6 +39,7 @@ class Nomic::App < Sinatra::Base
     #request slug allocation
     puts 'Requesting slug allocation'
     api_key = 'OjJlY2Q3NWJiLWVmYTQtNGMzMC1iMDM0LTFlMTY0NGNkNTVlNQo='
+    HTTParty.debug_output $stderr
     @result = HTTParty.post('https://api.heroku.com/apps/shopify-nomic/slugs',
                             headers: { "ContentType" => 'application/json',
                               'Authorization' => api_key,
