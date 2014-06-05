@@ -44,7 +44,7 @@ class Nomic::App < Sinatra::Base
                               'Authorization' => api_key,
                                'Accept' => 'application/vnd.heroku+json; version=3' },
                             body:
-                              { "process_types" => {"web" => "bundle exec rackup config.ru -p $PORT"}})
+                              { "process_types" => {"web" => "bundle exec rackup config.ru"}})
     puts "result of first slug alloc: #{@result}"
     blob_response = @result['blob']
     id = @result['id']
