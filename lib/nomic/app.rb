@@ -46,22 +46,24 @@ class Nomic::App < Sinatra::Base
                                'Accept' => 'application/vnd.heroku+json; version=3' },
                             body:
                               { "process_types" => {"web" => "ruby-2.0.0/bin/ruby server.rb"}})
-    puts 'results of requestion slug allocaiton'
+    puts 'results of request slug allocaiton'
     puts @result
     puts 'fetching blob'
 #    debugger
     blob_response = @result['blob']
     puts 'blob response'
     puts blob_response
-
+    puts 'blob response above'
     #push slug to server
     tgz = File.new(location_of_tgz, 'rb').read
-    HTTParty.put('https://api.heroku.com/apps/shopify-nomic/releases',
+    put_response = HTTParty.put('https://api.heroku.com/apps/shopify-nomic/releases',
                  headers: {"Content-Type" => "application/json",
                    "Accept" => "application/vnd.heroku+json; version=3",
                    'Authorization' => api_key},
                  body: tgz)
-
+    puts 'results of put request'
+    puts put_response
+    puts 'put response above'
     #release slug
     #curl -X POST \
     #-H "Accept: application/vnd.heroku+json; version=3" \
