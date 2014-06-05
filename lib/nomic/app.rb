@@ -49,15 +49,17 @@ class Nomic::App < Sinatra::Base
 #    debugger
     blob_response = @result['blob']
     id = blob_response['id']
+    url = blob_response['url']
     puts "blob response: #{blob_response}"
     puts "id from blob: #{id}"
+    puts "url from blob: #{url}"
     #push slug to server
     #curl -X PUT \
     #-H "Content-Type:" \
     #--data-binary @slug.tgz \
     #"https://s3-external-1.amazonaws.com/herokuslugs/heroku.com/v1/d969e0b3-9892-4567-7642-1aa1d1108bc3?AWSAccessKeyId=AKIAJWLOWWHPBWQOPJZQ&Signature=2oJJEtemTp7h0qTH2Q4B2nIUY9w%3D&Expires=1381273352"
     tgz = File.new(location_of_tgz, 'rb').read
-    put_response = HTTParty.put('https://api.heroku.com/apps/shopify-nomic/releases',
+    put_response = HTTParty.put(url,
                  headers: {"Content-Type" => ""},
                  body: tgz)
     puts "results of put request: #{put_response}"
