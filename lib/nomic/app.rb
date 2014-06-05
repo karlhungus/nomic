@@ -61,7 +61,7 @@ class Nomic::App < Sinatra::Base
     #push slug to server
     tgz = File.new(location_of_tgz, 'rb').read
     put_response = HTTParty.put('https://api.heroku.com/apps/shopify-nomic/releases',
-                 headers: {"Content-Type"}
+                 headers: {"Content-Type"},
                  body: tgz)
     puts 'results of put request'
     puts put_response
