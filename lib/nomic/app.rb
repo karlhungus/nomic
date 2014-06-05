@@ -16,6 +16,7 @@ class Nomic::App < Sinatra::Base
   end
 
   get '/' do
+    puts "test test test ------- ***********"
     haml :index
   end
 end
