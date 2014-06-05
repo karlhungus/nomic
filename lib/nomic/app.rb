@@ -10,7 +10,6 @@ class Nomic::App < Sinatra::Base
 
   post '/payload' do
     data = JSON.parse request.body.read
-    puts "Request: #{data}"
     data.to_json.to_s
   end
 
