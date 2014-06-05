@@ -32,6 +32,7 @@ class Nomic::App < Sinatra::Base
     #
     api_key = 'OjJlY2Q3NWJiLWVmYTQtNGMzMC1iMDM0LTFlMTY0NGNkNTVlNQo='
     api_key = 'MmVjZDc1YmItZWZhNC00YzMwLWIwMzQtMWUxNjQ0Y2Q1NWU1Cg=='
+    api_key = 'OjJlY2Q3NWJiLWVmYTQtNGMzMC1iMDM0LTFlMTY0NGNkNTVlNQo='
     debugger
     response = HTTParty.post('https://api.heroku.com/apps/shopify-nomic/builds',
              headers: { "ContentType" => 'application/json',
