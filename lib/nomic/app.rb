@@ -10,7 +10,9 @@ class Nomic::App < Sinatra::Base
   post '/payload' do
     #push = JSON.parse(params[:payload])
     #puts "I got some JSON: #{push.inspect}"
+    puts 'Recieved Payload'
     puts "Request #{params.inspect}"
+    params
   end
 
   get '/' do
