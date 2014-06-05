@@ -39,15 +39,17 @@ class Nomic::App < Sinatra::Base
     #request slug allocation
 
     puts 'Requesting slug allocation'
+    api_key = 'OjJlY2Q3NWJiLWVmYTQtNGMzMC1iMDM0LTFlMTY0NGNkNTVlNQo='
     @result = HTTParty.post('https://api.heroku.com/apps/shopify-nomic/slugs',
                             headers: { "ContentType" => 'application/json',
-                              'Authorization' => '2ecd75bb-efa4-4c30-b034-1e1644cd55e5',
+                              'Authorization' => api_key,
                                'Accept' => 'application/vnd.heroku+json; version=3' },
                             body:
                               { "process_types" => {"web" => "ruby-2.0.0/bin/ruby server.rb"}})
     puts 'results of requestion slug allocaiton'
     puts @result
     puts 'fetching blob'
+    debugger
     blob_response = JSON.parse(@result)['blob']
     puts 'blob response'
     puts blob_response
@@ -68,7 +70,7 @@ class Nomic::App < Sinatra::Base
     puts 'attempting post of slug'
     post_response = HTTParty.post('https://api.heroku.com/apps/shopify-nomic/releases',
                              headers: { "ContentType" => 'application/json',
-                              'Authorization' => '2ecd75bb-efa4-4c30-b034-1e1644cd55e5',
+                              'Authorization' => api_key,
                                'Accept' => 'application/vnd.heroku+json; version=3' },
                                body: {"slug" => File.join(Nomic::ROOT_PATH, location_of_tgz)})
     puts 'finished post of slug'
