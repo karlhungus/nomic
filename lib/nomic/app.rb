@@ -8,7 +8,6 @@ class Nomic::App < Sinatra::Base
   set :public, File.join(Nomic::ROOT_PATH, "public")
 
   post '/payload' do
-    puts 'Recved Payload'
     puts "Request: #{params}"
     params
   end
