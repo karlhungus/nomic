@@ -1,6 +1,6 @@
 require 'sinatra'
 require 'haml'
-
+requlre 'nomic'
 
 Class Nomic::App < Sinatra::Base
 
@@ -9,7 +9,7 @@ Class Nomic::App < Sinatra::Base
     set :views, File.join(Nomic::ROOT_PATH, "views")
     set :public, File.join(Nomic::ROOT_PATH, "public")
 
-    get '/'
+    get '/' do
         haml :index
     end
 end
