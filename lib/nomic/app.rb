@@ -5,6 +5,7 @@ require 'json'
 require 'byebug'
 require 'httparty'
 require 'github_helper'
+require 'redcarpet'
 
 class Nomic::App < Sinatra::Base
   include GithubHelper
