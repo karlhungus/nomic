@@ -70,6 +70,7 @@ class Nomic::App < Sinatra::Base
   end
 
   def comment(repo_name, pr_number, outcome, run_results)
+    markdown = Redcarpet::Markdown.new()
     comment = "##NOMIC:\n"
 
     comment += outcome ? 'Rules Passed, merging, deploying' : 'Unable to merge with failed rules:\n'
@@ -78,7 +79,7 @@ class Nomic::App < Sinatra::Base
     failed_rules.each do |rule|
         comment += "- #{rule}"
     end
-
+    comment = markdown.render(comment)
     github_client.add_comment(repo_name, pr_number, comment)
   end
 
