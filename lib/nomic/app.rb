@@ -15,7 +15,7 @@ class Nomic::App < Sinatra::Base
   @@data = {request: "no request"}
   post '/payload' do
     @@data = JSON.parse request.body.read
-    @github_token = Nomic.github_token
+
     case request.env['HTTP_X_GITHUB_EVENT']
     when 'pull_request'
         { "mission" => "pull request success" }.to_s
@@ -36,7 +36,7 @@ class Nomic::App < Sinatra::Base
 
       outcome = run_rules(@@data)
       result = merge(comment_repository, pr_number) if outcome
-      deploy(@github_token, comment_repostory, 'shopify-nomic') if result
+      deploy(Nomic.heroku_token, comment_repostory, 'shopify-nomic') if result
       { "outcome:" => result.to_s }.to_s
     end
   end
@@ -56,8 +56,7 @@ class Nomic::App < Sinatra::Base
   end
 
   get '/deploy_tarball' do
-    api_key = 'OjJlY2Q3NWJiLWVmYTQtNGMzMC1iMDM0LTFlMTY0NGNkNTVlNQo='
-    response = deploy(api_key, 'karlhungus/nomic','shopify-nomic')
+    response = deploy(Nomic.heroku_token, 'karlhungus/nomic','shopify-nomic')
     "<pre>#{response.to_s}</pre>"
   end
 
