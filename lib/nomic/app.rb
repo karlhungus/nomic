@@ -22,7 +22,7 @@ class Nomic::App < Sinatra::Base
 
       run_results = run_rules(@@data)
       outcome = run_results.all? {|key, value| value == true }
-      comment(comment_repository, pr_number, output, run_results)
+      comment(comment_repository, pr_number, outcome, run_results)
       if outcome
         result = merge(comment_repository, pr_number) if outcome
         deploy(Nomic.heroku_token, comment_repostory, 'shopify-nomic') if result
