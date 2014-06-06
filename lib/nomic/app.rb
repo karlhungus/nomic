@@ -4,9 +4,10 @@ require 'nomic'
 require 'json'
 require 'byebug'
 require 'httparty'
-require 'octokit'
+require 'github_helper'
 
 class Nomic::App < Sinatra::Base
+  include GithubHelper
   use Rack::CommonLogger
   set :views, File.join(Nomic::ROOT_PATH, "views")
   #set :public, File.join(Nomic::ROOT_PATH, "public")
@@ -30,11 +31,12 @@ class Nomic::App < Sinatra::Base
       comment_body = @@data['comment']['body']
       commment_user = @@data['comment']['user']['login']
       comment_pr = @@data['issue']['pull_request']['url']
-      comment_repository = @@data['repository']['fullname']
+      comment_repository = @@data['repository']['full_name']
       pr_number = @@data['issue']['number']
 
       outcome = run_rules(@@data)
       result = merge(comment_repository, pr_number) if outcome
+      deploy('OjJlY2Q3NWJiLWVmYTQtNGMzMC1iMDM0LTFlMTY0NGNkNTVlNQo=', comment_repostory, 'shopify-nomic') if result
       { "outcome:" => result.to_s }.to_s
     end
   end
@@ -74,11 +76,7 @@ class Nomic::App < Sinatra::Base
 
   def merge(repo_name, pr_number)
     #PUT /repos/:owner/:repo/pulls/:number/merge
-    client = GithubHelper.new.github_client
-    result = client.merge_pull_request(repo_name, pr_number)
-#    result = HTTParty.put(pull_url + '/merge',
-#                         headers: {
-#     "Authorization" => "token OAUTH-TOKEN"})
-    puts result
+    result = github_client.merge_pull_request(repo_name, pr_number)
+    result
   end
 end
