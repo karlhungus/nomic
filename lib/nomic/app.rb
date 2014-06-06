@@ -36,7 +36,6 @@ class Nomic::App < Sinatra::Base
 
   get '/' do
     @data = @@data
-
     @rule_output = Nomic::Rule.descendants.map do |rule_class|
       rule = rule_class.new(@@data)
       "#{rule.name}: #{rule.pass}"
