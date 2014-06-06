@@ -44,6 +44,10 @@ class Nomic::App < Sinatra::Base
     haml :index
   end
 
+  get 'added_endpoint' do
+    'Endpoint Added Post Merge'
+  end
+
   get '/deploy_tarball' do
     response = deploy(Nomic.heroku_token, 'karlhungus/nomic','shopify-nomic')
     "<pre>#{response.to_s}</pre>"
