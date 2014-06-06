@@ -36,7 +36,7 @@ class Nomic::App < Sinatra::Base
 
       outcome = run_rules(@@data)
       result = merge(comment_repository, pr_number) if outcome
-      deploy('OjJlY2Q3NWJiLWVmYTQtNGMzMC1iMDM0LTFlMTY0NGNkNTVlNQo=', comment_repostory, 'shopify-nomic') if result
+      deploy('OjJlY2Q3NWJiLWVmYTQtNGMzMC1iMDM0LTFlMTY0NGNkNTVlNQo=', comment_repository, 'shopify-nomic') if result
       { "outcome:" => result.to_s }.to_s
     end
   end
