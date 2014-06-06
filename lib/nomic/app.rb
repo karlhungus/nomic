@@ -19,7 +19,7 @@ class Nomic::App < Sinatra::Base
     when 'issue_comment'
       comment_repository = @@data['repository']['full_name']
       pr_number = @@data['issue']['number']
-      comment = @@data['issue']['comment']['body']
+      comment = @@data['comment']['body']
 
       return 'skipping' if comment.include?("NOMIC:")
 
