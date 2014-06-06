@@ -1,6 +1,7 @@
 class Rule1 < Nomic::Rule
   include GithubHelper
   MIN_APPROVALS = 2
+  APPROVAL_STRING = ":+1:"
 
   def name
     "Pass if there are sufficient upvotes"
@@ -25,7 +26,7 @@ class Rule1 < Nomic::Rule
   end
 
   def approval?(comment)
-    comment.include? ":+1:"
+    comment.include? APPROVAL_STRING
   end
 
   def pass
