@@ -35,6 +35,10 @@ class Nomic::App < Sinatra::Base
 
   get '/' do
     @data = @@data
+    @rule_output = Nomic::Rule.descendants.map do |rule_class|
+      rule = rule_class.new
+      "#{rule.name}: #{rule.pass}"
+    end
     haml :index
   end
 
@@ -47,7 +51,7 @@ class Nomic::App < Sinatra::Base
 
   def deploy(api_key, repo_name, app_name)
     content = '{ "source_blob": {"url": ' + "\"https://github.com/#{repo_name}/archive/master.tar.gz\"" + ', "version": "1"}}'
-    puts content
+
     HTTParty.post("https://api.heroku.com/apps/#{app_name}/builds",
       headers: {
         'Content-Type' => 'application/json',
@@ -55,5 +59,12 @@ class Nomic::App < Sinatra::Base
         'Accept' => 'application/vnd.heroku+json; version=3'
       },
       body: content)
+  end
+
+  def run_rules
+    Nomic::Rule.decendants.all? { |rule_class| rule_class.new.pass }
+  end
+
+  def merge
   end
 end
