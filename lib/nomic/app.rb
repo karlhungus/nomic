@@ -25,6 +25,7 @@ class Nomic::App < Sinatra::Base
       #count last occurence of :+1+:
       #decide if enough +1+'s exist
       #if so merge, deploy_tarball
+
       comments_url = request.body['issue']['comments_url']
       comment_body = resqest.body['comment']['body']
       commment_user = request.body['comment']['user']['login']
@@ -38,16 +39,21 @@ class Nomic::App < Sinatra::Base
   end
 
   get '/deploy_tarball' do
-    #curl -n -X POST https://api.heroku.com/apps/shopify-nomic/builds -d '{"source_blob":{"url":"https://github.com/karlhungus/nomic/archive/master.tar.gz", "version": "111"}}' -H 'Accept: application/vnd.heroku+json; version=3' -H "Content-Type: application/json"
-    #
     api_key = 'OjJlY2Q3NWJiLWVmYTQtNGMzMC1iMDM0LTFlMTY0NGNkNTVlNQo='
-    response = HTTParty.post('https://api.heroku.com/apps/shopify-nomic/builds',
-             headers: { "Content-Type" => 'application/json',
-              'Authorization' => api_key,
-               'Accept' => 'application/vnd.heroku+json; version=3' },
-            body:
-              '{ "source_blob": {"url": "https://github.com/karlhungus/nomic/archive/master.tar.gz", "version": "1"}}')
-    puts "response: #{response}"
-    response.to_s
+    response = deploy(api_key, 'karlhungus/nomic','shopify-nomic')
+    "<pre>#{response.to_s}</pre>"
+  end
+
+
+  def deploy(api_key, repo_name, app_name)
+    content = '{ "source_blob": {"url": ' + "\"https://github.com/#{repo_name}/archive/master.tar.gz\"" + ', "version": "1"}}'
+    puts content
+    HTTParty.post("https://api.heroku.com/apps/#{app_name}/builds",
+      headers: {
+        'Content-Type' => 'application/json',
+        'Authorization' => api_key,
+        'Accept' => 'application/vnd.heroku+json; version=3'
+      },
+      body: content)
   end
 end
