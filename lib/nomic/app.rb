@@ -19,6 +19,9 @@ class Nomic::App < Sinatra::Base
     when 'issue_comment'
       comment_repository = @@data['repository']['full_name']
       pr_number = @@data['issue']['number']
+      comment = @@data['issue']['comment']
+
+      return 'skipping' if comment.include?("NOMIC:")
 
       run_results = run_rules(@@data)
       outcome = run_results.all? {|key, value| value == true }
@@ -66,7 +69,8 @@ class Nomic::App < Sinatra::Base
   end
 
   def comment(repo_name, pr_number, outcome, run_results)
-    comment = outcome ? 'Rules Passed, merging, deploying' : 'Rules Failed'
+    comment = "NOMIC:"
+    comment += outcome ? 'Rules Passed, merging, deploying' : 'Rules Failed'
     comment += ": #{run_results}"
     github_client.add_comment(repo_name, pr_number, comment)
   end
