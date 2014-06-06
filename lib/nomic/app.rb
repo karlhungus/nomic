@@ -4,6 +4,7 @@ require 'nomic'
 require 'json'
 require 'byebug'
 require 'httparty'
+require 'octokit'
 
 class Nomic::App < Sinatra::Base
   use Rack::CommonLogger
@@ -25,12 +26,12 @@ class Nomic::App < Sinatra::Base
       #count last occurence of :+1+:
       #decide if enough +1+'s exist
       #if so merge, deploy_tarball
-
-      comments_url = request.body['issue']['comments_url']
-      comment_body = resqest.body['comment']['body']
-      commment_user = request.body['comment']['user']['login']
-      comment_pr = request.body['issue']['pull_request']['url']
-      merge(comment_pr) if comment_pr
+      comments_url = @@data['issue']['comments_url']
+      comment_body = @@data['comment']['body']
+      commment_user = @@data['comment']['user']['login']
+      comment_pr = @@data['issue']['pull_request']['url']
+      run_rules(@@data)
+      #merge(comment_pr) if comment_pr
       { "mission" => "success" }.to_s
 
     end
@@ -38,8 +39,9 @@ class Nomic::App < Sinatra::Base
 
   get '/' do
     @data = @@data
+
     @rule_output = Nomic::Rule.descendants.map do |rule_class|
-      rule = rule_class.new
+      rule = rule_class.new(@@data)
       "#{rule.name}: #{rule.pass}"
     end
     haml :index
@@ -64,12 +66,15 @@ class Nomic::App < Sinatra::Base
       body: content)
   end
 
-  def run_rules
-    Nomic::Rule.decendants.all? { |rule_class| rule_class.new.pass }
+  def run_rules(issue_comment)
+    Nomic::Rule.decendants.all? { |rule_class| rule_class.new(issue_comment).pass }
   end
 
   def merge(pull_url)
     #PUT /repos/:owner/:repo/pulls/:number/merge
-    HTTParty.put(pull_url + '/merge')
+    result = HTTParty.put(pull_url + '/merge',
+                         headers: {
+     "Authorization" => "token OAUTH-TOKEN"})
+    puts result
   end
 end
