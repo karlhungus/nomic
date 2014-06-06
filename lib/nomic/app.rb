@@ -67,7 +67,7 @@ class Nomic::App < Sinatra::Base
   end
 
   def run_rules(issue_comment)
-    Nomic::Rule.decendants.all? { |rule_class| rule_class.new(issue_comment).pass }
+    Nomic::Rule.descendants.all? { |rule_class| rule_class.new(issue_comment).pass }
   end
 
   def merge(pull_url)
