@@ -24,7 +24,7 @@ class Nomic::App < Sinatra::Base
       return 'skipping' if comment.include?("NOMIC:")
 
       run_results = run_rules(@@data)
-      outcome = run_results.all? {|key, value| value == true }
+      outcome = run_results.all?{|_, value| value}
       comment(comment_repository, pr_number, outcome, run_results)
       if outcome
         result = merge(comment_repository, pr_number) if outcome
@@ -62,9 +62,10 @@ class Nomic::App < Sinatra::Base
   end
 
   def run_rules(issue_comment)
-    Nomic::Rule.descendants.map do |rule_class|
+    Nomic::Rule.descendants.reduce({}) do |hash, rule_class|
       rule = rule_class.new(issue_comment)
-      {rule.name => rule.pass}
+      hash[rule.name] = rule.pass
+      hash
     end
   end
 
