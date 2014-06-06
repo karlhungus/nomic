@@ -6,6 +6,14 @@ class Nomic::Rule
   def initialize(issue_comment)
     @issue_comment = issue_comment
   end
+  
+  def valid_issue?
+    @issue_comment.key?("issue") && @issue_comment.key?("comment")
+  end
+
+  def invalid_issue?
+    !valid_issue?
+  end
 
   def name
     self.class.to_s
