@@ -27,6 +27,12 @@ class Nomic::App < Sinatra::Base
     haml :index
   end
 
+  get '/test' do
+    @data = @@data
+    haml :index
+  end
+
+
   get '/deploy_tarball' do
     #curl -n -X POST https://api.heroku.com/apps/shopify-nomic/builds -d '{"source_blob":{"url":"https://github.com/karlhungus/nomic/archive/master.tar.gz", "version": "111"}}' -H 'Accept: application/vnd.heroku+json; version=3' -H "Content-Type: application/json"
     #
