@@ -30,10 +30,12 @@ class Nomic::App < Sinatra::Base
       comment_body = @@data['comment']['body']
       commment_user = @@data['comment']['user']['login']
       comment_pr = @@data['issue']['pull_request']['url']
-      run_rules(@@data)
-      #merge(comment_pr) if comment_pr
-      { "mission" => "success" }.to_s
+      comment_repository = @@data['repository']['fullname']
+      pr_number = @@data['issue']['number']
 
+      outcome = run_rules(@@data)
+      result = merge(comment_repository, pr_number) if outcome
+      { "outcome:" => result.to_s }.to_s
     end
   end
 
@@ -70,11 +72,13 @@ class Nomic::App < Sinatra::Base
     Nomic::Rule.descendants.all? { |rule_class| rule_class.new(issue_comment).pass }
   end
 
-  def merge(pull_url)
+  def merge(repo_name, pr_number)
     #PUT /repos/:owner/:repo/pulls/:number/merge
-    result = HTTParty.put(pull_url + '/merge',
-                         headers: {
-     "Authorization" => "token OAUTH-TOKEN"})
+    client = GithubHelper.new.github_client
+    result = client.merge_pull_request(repo_name, pr_number)
+#    result = HTTParty.put(pull_url + '/merge',
+#                         headers: {
+#     "Authorization" => "token OAUTH-TOKEN"})
     puts result
   end
 end
