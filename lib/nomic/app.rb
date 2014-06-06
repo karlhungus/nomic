@@ -42,7 +42,6 @@ class Nomic::App < Sinatra::Base
   end
 
   get '/' do
-    ENV.each {|key,value| puts key, value}
     @data = @@data
 
     @rule_output = Nomic::Rule.descendants.map do |rule_class|
