@@ -13,9 +13,9 @@ class Rule1 < Nomic::Rule
 
   def pass
     if valid_issue?
-        last_comments.select{|comment| approval?(comment[:body])}.size >= MIN_APPROVALS
+      last_comments.select{|comment| approval_comment?(comment[:body])}.size >= MIN_APPROVALS
     else
-        false
+      false
     end
   end
 end
