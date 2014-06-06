@@ -18,6 +18,16 @@ class Nomic::App < Sinatra::Base
     when 'pull_request'
         { "mission" => "pull request success" }.to_s
     when 'pull_request_review_comment'
+      {'mission' => 'pr review comment'}.to_s
+    when 'issue_comment'
+      #go to comments url
+      #get all comments
+      #count last occurence of :+1+:
+      #decide if enough +1+'s exist
+      #if so merge, deploy_tarball
+      comments_url = request.body['issue']['comments_url']
+      comment_body = resqest.body['comment']['body']
+      commment_user = request.body['comment']['user']['login']
         { "mission" => "success" }.to_s
     end
   end
