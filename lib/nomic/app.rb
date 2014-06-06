@@ -15,7 +15,7 @@ class Nomic::App < Sinatra::Base
   @@data = {request: "no request"}
   post '/payload' do
     @@data = JSON.parse request.body.read
-
+    @github_token = Nomic.github_token
     case request.env['HTTP_X_GITHUB_EVENT']
     when 'pull_request'
         { "mission" => "pull request success" }.to_s
