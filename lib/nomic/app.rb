@@ -61,7 +61,7 @@ class Nomic::App < Sinatra::Base
   def run_rules(issue_comment)
     Nomic::Rule.descendants.map do |rule_class|
       rule = rule_class.new(issue_comment)
-      rule.name => rule.pass
+      {rule.name => rule.pass}
     end
   end
 
