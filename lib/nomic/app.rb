@@ -28,7 +28,7 @@ class Nomic::App < Sinatra::Base
       comment(comment_repository, pr_number, outcome, run_results)
       if outcome
         result = merge(comment_repository, pr_number) if outcome
-        deploy(Nomic.heroku_token, comment_repostory, 'shopify-nomic') if result
+        deploy(Nomic.heroku_token, comment_repository, 'shopify-nomic') if result
       end
       { "outcome:" => run_results.to_s }.to_s
     end
