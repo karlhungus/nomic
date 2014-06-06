@@ -12,7 +12,6 @@ class Rule1 < Nomic::Rule
   end
 
   def pass
-    debugger
     last_comments.select{|comment| approval_comment?(comment[:body])}.size >= MIN_APPROVALS
   end
 end
