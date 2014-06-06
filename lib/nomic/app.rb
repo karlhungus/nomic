@@ -29,7 +29,10 @@ class Nomic::App < Sinatra::Base
       comments_url = request.body['issue']['comments_url']
       comment_body = resqest.body['comment']['body']
       commment_user = request.body['comment']['user']['login']
-        { "mission" => "success" }.to_s
+      comment_pr = request.body['issue']['pull_request']['url']
+      merge(comment_pr) if comment_pr
+      { "mission" => "success" }.to_s
+
     end
   end
 
@@ -65,6 +68,8 @@ class Nomic::App < Sinatra::Base
     Nomic::Rule.decendants.all? { |rule_class| rule_class.new.pass }
   end
 
-  def merge
+  def merge(pull_url)
+    #PUT /repos/:owner/:repo/pulls/:number/merge
+    HTTParty.put(pull_url + '/merge')
   end
 end
