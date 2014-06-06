@@ -51,6 +51,10 @@ class Nomic::App < Sinatra::Base
     haml :index
   end
 
+  get '/test' do
+    'deployed by heroku'
+  end
+
   get '/deploy_tarball' do
     api_key = 'OjJlY2Q3NWJiLWVmYTQtNGMzMC1iMDM0LTFlMTY0NGNkNTVlNQo='
     response = deploy(api_key, 'karlhungus/nomic','shopify-nomic')
