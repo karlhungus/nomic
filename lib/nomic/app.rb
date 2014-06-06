@@ -70,9 +70,15 @@ class Nomic::App < Sinatra::Base
   end
 
   def comment(repo_name, pr_number, outcome, run_results)
-    comment = "NOMIC:"
-    comment += outcome ? 'Rules Passed, merging, deploying' : 'Rules Failed'
-    comment += ": #{run_results}"
+    comment = "##NOMIC:\n"
+
+    comment += outcome ? 'Rules Passed, merging, deploying' : 'Unable to merge with failed rules:\n'
+    failed_rules = run_results.map {|rule, value| !value ? rule : nil }.compact
+
+    failed_rules.each do |rule|
+        comment += "- #{rule}"
+    end
+
     github_client.add_comment(repo_name, pr_number, comment)
   end
 
