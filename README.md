@@ -1,3 +1,19 @@
+# Essential Hurdles to creation:
+
+1. Setup a Github organisation with the "Players" belonging to a readonly team.
+
+2. Fork the base nomic Github repo into the organization
+
+3. Deploy the code to a Heroku app
+
+4. Test Github webhooks can post to Heroku app
+
+5. Test that Heroku app can deploy itself based
+
+6. Write the rules for self-deployment
+
+
+
 # Reference For Rules And Principles
 
 http://legacy.earlham.edu/~peters/writing/nomic.htm#initial%20set
