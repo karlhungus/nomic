@@ -12,6 +12,6 @@ class Rule3 < Nomic::Rule
   end
 
   def pass
-    last_comments.select{|comment| approval?(comment[:body])}
+    last_comments.all? {|comment| approval?(comment[:body])}
   end
 end
