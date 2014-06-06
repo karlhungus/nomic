@@ -36,7 +36,7 @@ class Nomic::Rule
       user_comments.max_by{|comment| comment[:updated_at]}
     end
   rescue
-    nil
+    []
   end
 
   def invalid_issue?
