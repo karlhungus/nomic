@@ -34,6 +34,10 @@ class Nomic::App < Sinatra::Base
     end
   end
 
+  get '/foo' do
+    'heroku deployed this'
+  end
+
   get '/' do
     @data = @@data
 
