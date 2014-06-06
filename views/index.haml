@@ -3,6 +3,9 @@ The current directory:
 %pre
   = File.expand_path File.dirname(Nomic::ROOT_PATH)
 
+%pre
+  = @rule_output
+
 Last /payload request:
 
 %pre
