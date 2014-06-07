@@ -1,4 +1,6 @@
 github:
-  api_key: 'blahblah'
+  api_key: ''   # github api_key
+  repo_name: '' # github full reponame <user/org>/<name>
 heroku:
-  api_key: 'blahblah'
+  api_key: ''  # heroku api_key run: heroku auth:token | base64
+  app_name: '' # heroku application name

@@ -8,6 +8,7 @@ require 'github_helper'
 require 'redcarpet'
 
 class Nomic::App < Sinatra::Base
+  NOMIC_ISSUE_STRING = 'Nomic:'.freeze
   include GithubHelper
   use Rack::CommonLogger
   set :views, File.join(Nomic::ROOT_PATH, "views")
@@ -16,20 +17,19 @@ class Nomic::App < Sinatra::Base
   post '/payload' do
     @@data = JSON.parse request.body.read
 
-    case request.env['HTTP_X_GITHUB_EVENT']
-    when 'issue_comment'
+    if request.env['HTTP_X_GITHUB_EVENT'] == 'issue_comment'
       comment_repository = @@data['repository']['full_name']
       pr_number = @@data['issue']['number']
       comment = @@data['comment']['body']
 
-      return 'skipping' if comment.include?("NOMIC:")
+      return 'skipping' if comment.include?(NOMIC_ISSUE_STRING)
 
       run_results = run_rules(@@data)
       outcome = run_results.all?{|_, value| value}
       comment(comment_repository, pr_number, outcome, run_results)
       if outcome
         result = merge(comment_repository, pr_number) if outcome
-        deploy(Nomic.heroku_token, comment_repository, 'shopify-nomic') if result
+        deploy(Nomic.heroku_token, comment_repository, Nomic.heroku_app_name) if result
       end
       { "outcome:" => run_results.to_s }.to_s
     end
@@ -45,7 +45,7 @@ class Nomic::App < Sinatra::Base
   end
 
   get '/deploy_tarball' do
-    response = deploy(Nomic.heroku_token, 'karlhungus/nomic','shopify-nomic')
+    response = deploy(Nomic.heroku_token, Nomic.github_repo, Nomic.heroku_app_name)
     "<pre>#{response.to_s}</pre>"
   end
 
@@ -71,15 +71,12 @@ class Nomic::App < Sinatra::Base
 
   def comment(repo_name, pr_number, outcome, run_results)
     markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
-    comment = "##NOMIC:"
+    comment = "#####{NOMIC_ISSUE_STRING}:\n"
 
-    comment += outcome ? 'Rules Passed, merging, deploying' : 'Unable to merge with failed rules:'
-    failed_rules = run_results.map {|rule, value| !value ? rule : nil }.compact
-
-    failed_rules.each do |rule|
-        comment += " - #{rule}"
-    end
+    comment += outcome ? "Rules Passed, merging, deploying:\n" : "Unable to merge with failed rules:\n"
+    comment += run_results.map {|rule, _| " - #{rule}\n" }.join
     comment = markdown.render(comment)
+
     github_client.add_comment(repo_name, pr_number, comment)
   end
 
