@@ -1,6 +1,6 @@
 require 'bad_word_detector'
 
-class Rule3 < Nomic::Rule
+class Rule2 < Nomic::Rule
   include GithubHelper
 
   def name
