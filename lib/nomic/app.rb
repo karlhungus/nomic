@@ -5,6 +5,7 @@ require 'json'
 require 'httparty'
 require 'github_helper'
 require 'redcarpet'
+require 'pry'
 
 class Nomic::App < Sinatra::Base
   NOMIC_ISSUE_STRING = 'Nomic:'.freeze

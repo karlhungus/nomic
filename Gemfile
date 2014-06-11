@@ -14,8 +14,6 @@ gem 'redcarpet'
 
 gem 'bad_word_detector'
 
-group :development, :test do
-  gem 'pry'
-  gem 'pry-byebug'
-  gem 'pry-coolline'
-end
+gem 'pry'
+gem 'pry-byebug'
+gem 'pry-coolline'
