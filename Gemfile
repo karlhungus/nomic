@@ -4,14 +4,18 @@ ruby '2.0.0'
 gem 'tilt', '~> 1.4.1'
 gem 'sinatra'
 gem 'json'
-gem 'slim'
-gem 'haml'
 gem 'httparty'
-gem 'byebug'
-gem 'pry'
-gem 'pry-byebug'
-gem 'pry-stack_explorer'
 gem 'webrick'
 gem 'octokit'
-gem 'bad_word_detector'
+
+gem 'slim'
+gem 'haml'
 gem 'redcarpet'
+
+gem 'bad_word_detector'
+
+group :development, :test do
+  gem 'pry'
+  gem 'pry-byebug'
+  gem 'pry-coolline'
+end
