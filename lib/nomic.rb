@@ -1,5 +1,6 @@
 module Nomic
   extend self
+  ROOT_PATH = File.expand_path("..", File.dirname(__FILE__))
 
   def github_token
     @github_token ||= ENV[GITHUB_API_KEY]
