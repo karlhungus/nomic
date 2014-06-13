@@ -44,23 +44,6 @@ class Nomic::App < Sinatra::Base
     haml :index
   end
 
-  get '/deploy_tarball' do
-    response = deploy(Nomic.heroku_token, Nomic.github_repo, Nomic.heroku_app_name)
-    "<pre>#{response.to_s}</pre>"
-  end
-
-  def deploy(api_key, repo_name, app_name)
-    content = '{ "source_blob": {"url": ' + "\"https://github.com/#{repo_name}/archive/master.tar.gz\"" + ', "version": "1"}}'
-
-    HTTParty.post("https://api.heroku.com/apps/#{app_name}/builds",
-      headers: {
-        'Content-Type' => 'application/json',
-        'Authorization' => api_key,
-        'Accept' => 'application/vnd.heroku+json; version=3'
-      },
-      body: content)
-  end
-
   def run_rules(issue_comment)
     Nomic::RuleRunner.run_rules
   end
