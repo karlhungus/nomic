@@ -62,11 +62,7 @@ class Nomic::App < Sinatra::Base
   end
 
   def run_rules(issue_comment)
-    Nomic::Rule.descendants.reduce({}) do |hash, rule_class|
-      rule = rule_class.new(issue_comment)
-      hash[rule.name] = rule.pass
-      hash
-    end
+    Nomic::RuleRunner.run_rules
   end
 
   def comment(repo_name, pr_number, outcome, run_results)
