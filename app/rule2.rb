@@ -16,7 +16,7 @@ class Rule2 < Nomic::Rule
     return BadWordDetector.new.find(comment) ? false : true
   end
 
-  def pass
+  def pass?
     issue_comment.last_comments.all? {|comment| approval?(comment[:body])}
   end
 end

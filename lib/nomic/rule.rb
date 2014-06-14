@@ -1,4 +1,5 @@
 class Nomic::Rule
+  NOMIC_ISSUE_STRING = 'Nomic:'.freeze
   def self.descendants
     ObjectSpace.each_object(Class).select { |klass| klass < self }
   end
@@ -11,7 +12,10 @@ class Nomic::Rule
     self.class.to_s
   end
 
-  def run
+  def pass?
     false
+  end
+
+  def execute(outcome)
   end
 end

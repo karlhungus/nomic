@@ -1,4 +1,4 @@
-class Rule3 < Nomic::Rule
+class ScoreRule < Nomic::Rule
   module ScoreEndpoint
     def self.included(app)
       app.get "/score" do
@@ -18,7 +18,7 @@ class Rule3 < Nomic::Rule
     'Add a Score endpoint'
   end
 
-  def pass
+  def pass?
     Nomic::App.send(:include, ScoreEndpoint)
     true
   end
