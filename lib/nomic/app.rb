@@ -20,11 +20,10 @@ class Nomic::App < Sinatra::Base
       return 'skipping' if issue_comment.comment.include?(Nomic::Rule.NOMIC_ISSUE_STRING)
 
       run_results = run_rules(@@data)
-      outcome = run_results.all?{|_, value| value}
-      CommentRule.comment(issue_comment.repo_name, issue_comment.issue_number, outcome, run_results)
-      if outcome
-        result = MergeRule.merge(issue_comment.repo_name, issue_comment.issue_number) if outcome
-        DeployRule.deploy(Nomic.heroku_token, Nomic.repo_name, Nomic.heroku_app_name) if result
+      CommentRule.comment(issue_comment.repo_name, issue_comment.issue_number, run_results)
+      if run_results.all_pass?
+        result = MergeRule.merge(issue_comment.repo_name, issue_comment.issue_number)
+        DeployRule.deploy if result
       end
       { "outcome:" => run_results.to_s }.to_s
     end

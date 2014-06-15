@@ -5,7 +5,7 @@ class Github::IssueComment
     @issue_comment
   end
 
-  def valid_issue?
+  def valid?
     @issue_comment.key?("issue") && @issue_comment.key?("comment")
   end
 
@@ -33,7 +33,7 @@ class Github::IssueComment
     end
   end
 
-  def comments
+  def last_comments
     comments.group_by{|c| c[:user][:id]}.values.map do |user_comments|
       user_comments.max_by{|comment| comment[:updated_at]}
     end

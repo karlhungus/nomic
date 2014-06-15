@@ -6,12 +6,12 @@ class Nomic::RuleRunner
   def run_rules(issue_comment)
     results = @rules.reduce({}) do |hash, rule_class|
       rule = rule_class.new(issue_comment)
-      hash[rule.name] = rule.pass?
+      hash[rule] = rule.pass?
       hash
     end
+    results = RunResults.new(results)
 
-    outcome = results.all? { |_,value| value }
-    @rules.each { |rule| rule.execute(outcome) }
+    @rules.each { |rule| rule.execute(results) }
     results
   end
 end

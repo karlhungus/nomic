@@ -15,17 +15,16 @@ class CommentRule < Nomic::Rule
     true
   end
 
-  def execute(outcome)
-    #TODO: need run results
-    CommentRule.comment(issue_comment.repo_name, issue_comment.number, outcome, outcome) if outcome
+  def execute(run_results)
+    CommentRule.comment(issue_comment.repo_name, issue_comment.number, run_results)
   end
 
-  def self.comment(repo_name, pr_number, outcome, run_results)
+  def self.comment(repo_name, pr_number, run_results)
     markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
     comment = "####{NOMIC_ISSUE_STRING}:\n"
 
-    comment += outcome ? "Rules Passed, merging, deploying:\n" : "Unable to merge with failed rules:\n"
-    comment += run_results.map {|rule, _| " - #{rule}\n" }.join
+    comment += run_results.app_pass? ? "Rules Passed, merging, deploying:\n" : "Unable to merge with failed rules:\n"
+    comment += run_results.rule_names.map {|name, _| " - #{name}\n" }.join
     comment = markdown.render(comment)
 
     github_client.add_comment(repo_name, pr_number, comment)
