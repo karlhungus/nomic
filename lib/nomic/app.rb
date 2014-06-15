@@ -35,7 +35,7 @@ class Nomic::App < Sinatra::Base
       rule = rule_class.new(@@data)
       "#{rule.name}: #{rule.pass}"
     end
-    haml :index
+    "<pre>#{@rule_output}</pre><br/><pre>#{@@data}</pre>"
   end
 
   def run_rules(issue_comment)

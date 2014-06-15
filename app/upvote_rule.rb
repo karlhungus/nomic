@@ -1,6 +1,6 @@
 require 'github/issue_comment'
 
-class Rule1 < Nomic::Rule
+class UpvoteRule < Nomic::Rule
   include GithubHelper
   MIN_APPROVALS = 2
   APPROVAL_STRING = ":+1:"

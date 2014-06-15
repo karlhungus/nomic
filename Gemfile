@@ -8,11 +8,7 @@ gem 'httparty'
 gem 'webrick'
 gem 'octokit'
 
-gem 'slim'
-gem 'haml'
 gem 'redcarpet'
-
-gem 'bad_word_detector'
 
 gem 'pry'
 gem 'pry-byebug'
