@@ -1,13 +1,17 @@
 class RunResults
   def initialize(hash)
-    @results
+    @results = hash
   end
 
   def all_pass?
-    results.values.all?
+    @results.values.all?
   end
 
   def rule_names
-    @results.keys.map(&:name)
+    rules.map(&:name)
+  end
+
+  def rules
+    @results.keys
   end
 end

@@ -9,9 +9,9 @@ class Nomic::RuleRunner
       hash[rule] = rule.pass?
       hash
     end
-    results = RunResults.new(results)
 
-    @rules.each { |rule| rule.execute(results) }
+    results = RunResults.new(results)
+    results.rules.each { |rule| rule.execute(results) }
     results
   end
 end

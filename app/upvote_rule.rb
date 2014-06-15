@@ -18,7 +18,7 @@ class UpvoteRule < Nomic::Rule
   end
 
   def pass?
-    if valid?
+    if issue_comment.valid?
       issue_comment.last_comments.select{|comment| approval_comment?(comment[:body])}.size >= MIN_APPROVALS
     else
       false

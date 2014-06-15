@@ -4,6 +4,9 @@ $:.unshift File.expand_path('./lib', File.dirname(__FILE__))
 require 'bundler/setup'
 require 'nomic/app'
 require 'nomic/rule'
+require 'nomic/rule_runner'
+require 'nomic/run_results'
+require 'github/issue_comment'
 require 'github_helper'
 
 $:.unshift File.expand_path('./app', File.dirname(__FILE__))

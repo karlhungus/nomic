@@ -1,9 +1,9 @@
 require 'sinatra'
-require 'haml'
 require 'nomic'
 require 'json'
 require 'github_helper'
 require 'github/issue_comment'
+require 'pry'
 
 class Nomic::App < Sinatra::Base
   include GithubHelper
@@ -17,15 +17,10 @@ class Nomic::App < Sinatra::Base
     if request.env['HTTP_X_GITHUB_EVENT'] == 'issue_comment'
       issue_comment = Github::IssueComment.new(@@data)
 
-      return 'skipping' if issue_comment.comment.include?(Nomic::Rule.NOMIC_ISSUE_STRING)
+      return 'skipping' if issue_comment.comment.include?(Nomic::Rule::NOMIC_ISSUE_STRING)
 
       run_results = run_rules(@@data)
-      CommentRule.comment(issue_comment.repo_name, issue_comment.issue_number, run_results)
-      if run_results.all_pass?
-        result = MergeRule.merge(issue_comment.repo_name, issue_comment.issue_number)
-        DeployRule.deploy if result
-      end
-      { "outcome:" => run_results.to_s }.to_s
+      { "outcome:" => run_results.all_pass? }.to_s
     end
   end
 
@@ -33,12 +28,12 @@ class Nomic::App < Sinatra::Base
     @data = @@data
     @rule_output = Nomic::Rule.descendants.map do |rule_class|
       rule = rule_class.new(@@data)
-      "#{rule.name}: #{rule.pass}"
+      "#{rule.name}: #{rule.pass?}"
     end
     "<pre>#{@rule_output}</pre><br/><pre>#{@@data}</pre>"
   end
 
   def run_rules(issue_comment)
-    Nomic::RuleRunner.run_rules
+    Nomic::RuleRunner.new.run_rules(issue_comment)
   end
 end

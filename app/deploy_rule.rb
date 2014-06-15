@@ -1,4 +1,5 @@
 require 'httparty'
+require 'nomic'
 
 class DeployRule < Nomic::Rule
   module DeployEndpoint
@@ -20,8 +21,8 @@ class DeployRule < Nomic::Rule
     true
   end
 
-  def execute(outcome)
-    DeployRule.deploy if outcome
+  def execute(run_results)
+    DeployRule.deploy if run_results.all_pass?
   end
 
   def self.deploy(api_key = Nomic.heroku_token, repo_name = Nomic.repo_name, app_name = Nomic.heroku_app_name)
