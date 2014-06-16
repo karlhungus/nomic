@@ -11,7 +11,7 @@ class Nomic::RuleRunner
     end
 
     results = RunResults.new(results)
-    results.rules.each { |rule| rule.execute(results) }
+    results.rules.sort{ |rule| rule.class == DeployRule ? -1 : 0 }.each { |rule| rule.execute(results) }
     results
   end
 end

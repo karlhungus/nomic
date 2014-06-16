@@ -1,4 +1,6 @@
 class RunResults
+  extend Forwardable
+  def_delegators :@results, :each, :map
   def initialize(hash)
     @results = hash
   end

@@ -11,13 +11,13 @@ class DeployRule < Nomic::Rule
       end
     end
   end
+  Nomic::App.send(:include, DeployEndpoint)
 
   def name
     'Redeploy App if all rules pass, adds /deploy endpoint for forced deploys'
   end
 
   def pass?
-    Nomic::App.send(:include, DeployEndpoint)
     true
   end
 

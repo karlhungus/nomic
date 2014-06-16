@@ -1,5 +1,5 @@
 class Nomic::Rule
-  NOMIC_ISSUE_STRING = 'Nomic:'.freeze
+  NOMIC_ISSUE_STRING = 'Nomic'.freeze
   def self.descendants
     ObjectSpace.each_object(Class).select { |klass| klass < self }
   end
