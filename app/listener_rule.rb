@@ -33,7 +33,7 @@ class ListenerRule < Nomic::Rule
   Nomic::App.send(:include, ListenerEndpoint)
 
   def name
-    'Add issue comment listener for issue commets, run rules'
+    'Add issue comment listener, run rules'
   end
 
   def pass?
