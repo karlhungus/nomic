@@ -23,9 +23,9 @@ class ListenerRule < Nomic::Rule
       app.get '/' do
         @rule_output = Nomic::Rule.descendants.map do |rule_class|
           rule = rule_class.new(@@last_request)
-          "#{rule.name}: #{rule.pass?}\n"
+          "<li>#{rule.class} - #{rule.name}: #{rule.pass?}</li>"
         end
-        output = "Rule Run: <pre>#{@rule_output}</pre><br/>"
+        output = "Rule Run: <ul>#{@rule_output.join('')}</ul><br/>"
         output += '<a href="/deploy">force deploy</a><br/>'
         output += '<a href="/score">current score</a><br/>'
         output += "Last Input<br/><pre>#{JSON.pretty_generate @@last_request}</pre>"
