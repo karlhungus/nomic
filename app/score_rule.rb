@@ -1,5 +1,8 @@
+require 'github_helper'
+
 class ScoreRule < Nomic::Rule
   module ScoreEndpoint
+    include GithubHelper
     def self.included(app)
       app.get "/score" do
         pulls = github_client.pulls(Nomic.github_repo, state: 'closed')
