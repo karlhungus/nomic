@@ -25,7 +25,7 @@ class DeployRule < Nomic::Rule
     DeployRule.deploy if run_results.all_pass?
   end
 
-  def self.deploy(api_key = Nomic.heroku_token, repo_name = Nomic.repo_name, app_name = Nomic.heroku_app_name)
+  def self.deploy(api_key = Nomic.heroku_token, repo_name = Nomic.github_repo, app_name = Nomic.heroku_app_name)
     content = '{ "source_blob": {"url": ' + "\"https://github.com/#{repo_name}/archive/master.tar.gz\"" + ', "version": "1"}}'
 
     HTTParty.post("https://api.heroku.com/apps/#{app_name}/builds",
